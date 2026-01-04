@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>EV Predictive Maintenance Dashboard</h1>
+
+    <form method="POST" class="card">
+        <input name="motor_temp" placeholder="Motor Temperature" required>
+        <input name="vibration" placeholder="Motor Vibration" required>
+        <input name="torque" placeholder="Motor Torque" required>
+        <input name="battery_temp" placeholder="Battery Temperature" required>
+        <button>Check Status</button>
+    </form>
+
+    {% if result %}
+        <h2>{{ result }}</h2>
+    {% endif %}
+</body>
+</html>

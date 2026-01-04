@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EV Predictive Maintenance</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    h1 { color: #2c3e50; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 8px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+<h1>EV Anomaly Dashboard</h1>
+
+<button onclick="loadTickets()">Load Tickets</button>
+
+<table id="tickets">
+  <thead>
+    <tr>
+      <th>ID</th><th>Type</th><th>Severity</th><th>Score</th><th>Status</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+function loadTickets() {
+  fetch("/tickets")
+    .then(res => res.json())
+    .then(data => {
+      let tbody = document.querySelector("#tickets tbody");
+      tbody.innerHTML = "";
+      data.forEach(t => {
+        tbody.innerHTML += `<tr>
+          <td>${t.ticket_id}</td>
+          <td>${t.anomaly_type}</td>
+          <td>${t.severity}</td>
+          <td>${t.anomaly_score}</td>
+          <td>${t.status}</td>
+        </tr>`;
+      });
+    });
+}
+</script>
+
+</body>
+</html>
