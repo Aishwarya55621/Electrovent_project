@@ -3,6 +3,8 @@ from routes.dashboard import dashboard_bp
 from routes.auth import auth_bp
 from routes.health import health_bp
 from routes.api import api_bp
+from routes.charts import charts_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -13,7 +15,7 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(health_bp)
     app.register_blueprint(api_bp)
-
+    app.register_blueprint(charts_bp)
     return app
 
 app = create_app()

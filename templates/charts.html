@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anomaly Charts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="navbar">EV Predictive Maintenance</div>
+
+<div class="container">
+    <h1 class="page-title">Anomaly Analytics</h1>
+
+    <div class="card">
+        <h2>Severity Distribution</h2>
+        <canvas id="severityChart"></canvas>
+    </div>
+</div>
+
+<script>
+fetch("/api/chart-data")
+  .then(res => res.json())
+  .then(data => {
+    new Chart(document.getElementById("severityChart"), {
+        type: "bar",
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: "Anomaly Count",
+                data: data.values
+            }]
+        }
+    });
+});
+</script>
+
+</body>
+</html>

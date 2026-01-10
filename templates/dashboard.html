@@ -10,9 +10,11 @@
 
 <body>
 
-    <!-- NAVBAR -->
+    <!-- STEP 4: NAVBAR -->
     <div class="navbar">
-        EV Predictive Maintenance
+        EV Predictive Maintenance |
+        <a href="/dashboard">Dashboard</a> |
+        <a href="/charts">Charts</a>
     </div>
 
     <!-- MAIN CONTAINER -->
@@ -21,7 +23,7 @@
         <!-- PAGE TITLE -->
         <h1 class="page-title">Anomaly Detection Dashboard</h1>
 
-        <!-- STEP 7: SUMMARY CARDS -->
+        <!-- SUMMARY CARDS -->
         <div class="summary-grid">
             <div class="summary-card total">
                 <h3>Total Tickets</h3>
@@ -72,12 +74,6 @@
             {% endif %}
         </div>
 
-        <!-- CHART CARD -->
-        <div class="card" style="margin-top:30px;">
-            <h2>Anomaly Severity Distribution</h2>
-            <canvas id="severityChart"></canvas>
-        </div>
-
         <!-- TICKETS TABLE -->
         <div class="card" style="margin-top:30px;">
             <h2>Recent Anomaly Tickets</h2>
@@ -104,25 +100,6 @@
         </div>
 
     </div>
-
-    <!-- STEP 7: CHART SCRIPT -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        fetch("/api/chart-data")
-          .then(res => res.json())
-          .then(data => {
-            new Chart(document.getElementById("severityChart"), {
-                type: "bar",
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: "Anomaly Count",
-                        data: data.values
-                    }]
-                }
-            });
-        });
-    </script>
 
 </body>
 </html>
