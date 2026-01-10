@@ -19,6 +19,23 @@ def create_ticket(anomaly_type, severity):
         INSERT INTO tickets (timestamp, anomaly_type, severity, status)
         VALUES (?, ?, ?, ?)
     """, (datetime.now(), anomaly_type, severity, "OPEN"))
-
+    
+    
     conn.commit()
     conn.close()
+
+
+def get_recent_tickets(limit=10):
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT id, timestamp, anomaly_type, severity, status
+        FROM tickets
+        ORDER BY timestamp DESC
+        LIMIT ?
+    """, (limit,))
+
+    rows = cur.fetchall()
+    conn.close()
+    return rows

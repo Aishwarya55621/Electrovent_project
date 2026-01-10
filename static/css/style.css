@@ -1,32 +1,142 @@
+:root {
+    --primary-blue: #1565c0;
+    --primary-green: #2e7d32;
+    --light-blue: #e3f2fd;
+    --light-green: #e8f5e9;
+    --card-bg: #ffffff;
+    --success: #2e7d32;
+    --danger: #d32f2f;
+}
+
+/* RESET + BASE */
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
 body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        var(--light-blue),
+        var(--light-green)
+    );
+    color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+    padding: 22px 30px;
+    color: white;
+    font-size: 34px;          /* BIG TITLE */
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* MAIN CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* PAGE TITLE */
+.page-title {
+    text-align:center;
+    font-size: 36px;
+    color: #0d47a1;
+    margin-bottom: 35px;
+}
+
+/* CARD */
+.card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* FORM GRID */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 25px;
+}
+
+/* INPUTS */
+input {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+/* BUTTON */
+button {
+    grid-column: span 2;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background: var(--primary-green);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1b5e20;
+}
+
+/* STATUS BOX */
+.status {
+    margin-top: 25px;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.status.success {
     background: #e8f5e9;
-    font-family: Arial;
+    color: var(--success);
+    border-left: 6px solid var(--success);
+}
+
+.status.danger {
+    background: #ffebee;
+    color: var(--danger);
+    border-left: 6px solid var(--danger);
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.ticket-table th,
+.ticket-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
     text-align: center;
 }
 
-h1 {
+.ticket-table th {
+    background: #e3f2fd;
     color: #0d47a1;
-}
-
-.card {
-    background: white;
-    padding: 20px;
-    width: 300px;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #90caf9;
-}
-
-input {
-    width: 90%;
-    margin: 5px;
-    padding: 8px;
-}
-
-button {
-    background: #2e7d32;
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 100%;
 }

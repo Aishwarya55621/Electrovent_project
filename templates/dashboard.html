@@ -1,22 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>EV Predictive Maintenance Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
-    <h1>EV Predictive Maintenance Dashboard</h1>
 
-    <form method="POST" class="card">
-        <input name="motor_temp" placeholder="Motor Temperature" required>
-        <input name="vibration" placeholder="Motor Vibration" required>
-        <input name="torque" placeholder="Motor Torque" required>
-        <input name="battery_temp" placeholder="Battery Temperature" required>
-        <button>Check Status</button>
-    </form>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        EV Predictive Maintenance
+    </div>
 
-    {% if result %}
-        <h2>{{ result }}</h2>
-    {% endif %}
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- PAGE TITLE -->
+        <h1 class="page-title">Anomaly Detection Dashboard</h1>
+
+        <!-- STEP 7: SUMMARY CARDS -->
+        <div class="summary-grid">
+            <div class="summary-card total">
+                <h3>Total Tickets</h3>
+                <p>{{ total }}</p>
+            </div>
+
+            <div class="summary-card critical">
+                <h3>Critical</h3>
+                <p>{{ critical }}</p>
+            </div>
+
+            <div class="summary-card high">
+                <h3>High</h3>
+                <p>{{ high }}</p>
+            </div>
+
+            <div class="summary-card normal">
+                <h3>Normal</h3>
+                <p>{{ normal }}</p>
+            </div>
+        </div>
+
+        <!-- INPUT CARD -->
+        <div class="card">
+            <h2>Motor & Battery Health Check</h2>
+            <p>Enter sensor values to detect anomalies in EV components.</p>
+
+            <form method="POST" class="form-grid">
+                <input type="number" step="any" name="motor_temp" placeholder="Motor Temperature (°C)" required>
+                <input type="number" step="any" name="vibration" placeholder="Motor Vibration" required>
+                <input type="number" step="any" name="torque" placeholder="Motor Torque" required>
+                <input type="number" step="any" name="battery_temp" placeholder="Battery Temperature (°C)" required>
+
+                <button type="submit">Run Anomaly Check</button>
+            </form>
+
+            <!-- RESULT STATUS -->
+            {% if result %}
+                {% if "Anomaly" in result %}
+                    <div class="status danger">
+                        ⚠️ {{ result }}
+                    </div>
+                {% else %}
+                    <div class="status success">
+                        ✅ {{ result }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- CHART CARD -->
+        <div class="card" style="margin-top:30px;">
+            <h2>Anomaly Severity Distribution</h2>
+            <canvas id="severityChart"></canvas>
+        </div>
+
+        <!-- TICKETS TABLE -->
+        <div class="card" style="margin-top:30px;">
+            <h2>Recent Anomaly Tickets</h2>
+
+            <table class="ticket-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>Anomaly Type</th>
+                    <th>Severity</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for t in tickets %}
+                <tr>
+                    <td>{{ t[0] }}</td>
+                    <td>{{ t[1] }}</td>
+                    <td>{{ t[2] }}</td>
+                    <td>{{ t[3] }}</td>
+                    <td>{{ t[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+    <!-- STEP 7: CHART SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        fetch("/api/chart-data")
+          .then(res => res.json())
+          .then(data => {
+            new Chart(document.getElementById("severityChart"), {
+                type: "bar",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Anomaly Count",
+                        data: data.values
+                    }]
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>

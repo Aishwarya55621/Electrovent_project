@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EV Login</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
-<body class="center">
-    <form method="POST" class="card">
-        <h2>EV Anomaly Detector</h2>
-        <input placeholder="Username" required>
-        <input placeholder="Password" type="password" required>
-        <button>Login</button>
-    </form>
+<body>
+
+<div class="navbar">
+    EV Anomaly Detector
+</div>
+
+<div class="container">
+    <div class="card" style="max-width:400px;margin:auto;">
+        <h2>Login</h2>
+
+        <form method="POST">
+            <input placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button>Login</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

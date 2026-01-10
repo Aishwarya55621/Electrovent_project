@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request
 from services.model_service import predict_anomaly
-from services.ticket_service import create_ticket
-
+from services.ticket_service import create_ticket,get_recent_tickets
 dashboard_bp = Blueprint("dashboard", __name__)
 
 @dashboard_bp.route("/dashboard", methods=["GET", "POST"])
@@ -23,5 +22,5 @@ def dashboard():
             result = "⚠️ Anomaly Detected"
         else:
             result = "✅ Normal Operation"
-
-    return render_template("dashboard.html", result=result)
+    tickets = get_recent_tickets()
+    return render_template("dashboard.html", result=result, tickets=tickets)
