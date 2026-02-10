@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from ml.preprocessing import preprocess
 from ml.anomaly_model import load_model
 from ml.heuristic_rules import identify_anomaly_type
-from database.ticket_service import create_ticket
+from database.ticket_db_service import create_ticket
 from services.sms_service import send_sms
 
 predict_bp = Blueprint("predict", __name__)

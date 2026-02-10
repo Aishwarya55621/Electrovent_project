@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify
-from database.db import get_db
+from database.db import get_db_connection
 
 api_bp = Blueprint("api", __name__)
 
 @api_bp.route("/api/chart-data")
 def chart_data():
-    conn = get_db()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute("""

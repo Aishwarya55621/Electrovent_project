@@ -5,6 +5,10 @@ from routes.health import health_bp
 from routes.api import api_bp
 from routes.charts import charts_bp
 
+# 👉 ADD THESE TWO
+from routes.tickets import tickets_bp
+from routes.ticket_routes import ticket_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -16,7 +20,13 @@ def create_app():
     app.register_blueprint(health_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(charts_bp)
+
+    # 👉 REGISTER YOUR PART
+    app.register_blueprint(tickets_bp)
+    app.register_blueprint(ticket_bp)
+
     return app
+
 
 app = create_app()
 
