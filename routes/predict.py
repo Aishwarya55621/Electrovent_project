@@ -3,7 +3,7 @@ from ml.preprocessing import preprocess
 from ml.anomaly_model import load_model
 from ml.heuristic_rules import identify_anomaly_type
 from database.ticket_db_service import create_ticket
-from services.sms_service import send_sms
+from services.email_service import send_sms
 
 predict_bp = Blueprint("predict", __name__)
 model = load_model()
@@ -22,7 +22,7 @@ def predict():
         create_ticket(anomaly_type, severity, score)
 
         if severity == "HIGH":
-            send_sms(f"⚠️ {anomaly_type} detected. Severity: {severity}")
+            send_sms(f"{anomaly_type} detected. Severity: {severity}")
 
         return jsonify({"status": "ANOMALY", "severity": severity})
 

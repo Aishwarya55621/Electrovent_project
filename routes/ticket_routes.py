@@ -1,13 +1,12 @@
 from flask import Blueprint, request, jsonify
-from services.sms_service import send_sms
+from services.email_service import send_email
 
 ticket_bp = Blueprint("ticket", __name__)
 
 @ticket_bp.route("/ticket", methods=["POST"])
 def create_ticket():
-    ticket = request.json or {}
+    ticket = request.json
 
-    # Safely extract anomaly value
     anomaly = (
         ticket.get("anomalyType")
         or ticket.get("anomaly_type")
@@ -15,23 +14,17 @@ def create_ticket():
         or "Unknown"
     )
 
-    anomaly_detected = ticket.get("anomalyDetected", False)
-    mobile = ticket.get("mobile")   # 📱 mobile number
-
-    if anomaly_detected is True:
+    if ticket.get("anomalyDetected") is True:
         message = f"""
 ANOMALY ALERT
-Ticket ID: {ticket.get('id', 'N/A')}
+Ticket ID: {ticket.get('id')}
 Anomaly: {anomaly}
-Severity: {ticket.get('severity', 'N/A')}
+Severity: {ticket.get('severity')}
 """
-
-        if mobile:
-            send_sms(mobile, message)
-        else:
-            print("⚠️ Mobile number not provided. SMS not sent.")
+        send_email(message)
 
     return jsonify({
         "success": True,
         "message": "Ticket processed successfully."
     })
+
