@@ -17,13 +17,14 @@ def create_app():
     app.register_blueprint(health_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(charts_bp)
-    app.register_blueprint(chatbot_bp)
+
+    # Register Chatbot with URL prefix
+    app.register_blueprint(chatbot_bp, url_prefix="/chat")
 
     return app
+
 
 app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
