@@ -6,7 +6,7 @@ def init_db():
     cursor = conn.cursor()
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS tickets (
-        ticket_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         timestamp TEXT,
         anomaly_type TEXT,
         severity TEXT,
@@ -35,4 +35,4 @@ def create_ticket(anomaly_type, severity, score):
 
 def get_all_tickets():
     conn = get_db_connection()
-    return conn.execute("SELECT * FROM tickets ORDER BY ticket_id DESC").fetchall()
+    return conn.execute("SELECT * FROM tickets ORDER BY id DESC").fetchall()

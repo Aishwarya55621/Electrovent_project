@@ -1,8 +1,8 @@
 from datetime import datetime
-from database.db import get_db
+from database.db import get_db_connection
 
 def create_ticket(anomaly_type, severity):
-    conn = get_db()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute("""
@@ -26,7 +26,7 @@ def create_ticket(anomaly_type, severity):
 
 
 def get_recent_tickets(limit=10):
-    conn = get_db()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute("""
